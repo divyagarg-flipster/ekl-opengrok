@@ -821,14 +821,14 @@ Copyright (c) 2005, 2015, Oracle and/or its affiliates. All rights reserved.
     </target>
 
     <!-- Generate HTML test report -->
-    <target depends="init" name="test-report">
+    <!--<target depends="init" name="test-report">
         <junitreport todir="${build.test.results.dir}">
             <fileset dir="${build.test.results.dir}">
                 <include name="TEST-*.xml"/>
             </fileset>
             <report todir="${build.test.results.dir}"/>
         </junitreport>
-    </target>
+    </target> -->
 
     <!-- Build our patched JRCS library. -->
     <target name="jrcs" depends="-pre-pre-compile">
