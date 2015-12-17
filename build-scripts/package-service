@@ -23,7 +23,7 @@ function initialize() {
   # APP_HTTP_PORT="29050"
   # APP_JMX_PORT="23051"
   # APP_ADMIN_PORT="23052"
-  JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home"
+  JAVA_HOME="/usr/lib/jvm/jdk-8-oracle-x64/jre/"
   # STARTUP_COMMAND="com.ekart.money.application.WalletApplication"
   # APP_ROOT="/usr/share/${PACKAGE}"
   # statusfile=appstatus.html

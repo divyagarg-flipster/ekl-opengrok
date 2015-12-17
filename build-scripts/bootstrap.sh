@@ -3,7 +3,7 @@ set -e
 
 function define_variables() {
   export PACKAGE=ekl-opengrok
-  export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home
+  export JAVA_HOME=/usr/lib/jvm/jdk-8-oracle-x64/jre/
   export ANT="/usr/bin/ant"
   export SSH_USER=fk-build-user
   export VERSION_PREFIX=1
