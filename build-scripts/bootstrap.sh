@@ -3,7 +3,7 @@ set -e
 
 function define_variables() {
   export PACKAGE=ekl-opengrok
-  #export JAVA_HOME=/usr/lib/jvm/jdk-7-oracle-x64/jre/
+  #export JAVA_HOME=/usr/lib/jvm/java-6-sun
   export ANT="/usr/bin/ant"
   export SSH_USER=fk-build-user
   export VERSION_PREFIX=1
@@ -65,6 +65,10 @@ function validate_environment() {
     exit 255
   fi
 
+  if [ -z "${JAVA_HOME}" ]; then
+    log "JAVA_HOME env variable is not set. For jdk-8 it could be something like /usr/lib/jvm/java-8-oracle"
+    exit 255
+  fi
 
   if [ ! -x "${ANT}" ]; then
     log "${ANT} not found"
