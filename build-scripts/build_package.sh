@@ -30,7 +30,7 @@ function build_debian_package() {
   cp package.preinst  "${PACKAGE_ROOT_NAME}/DEBIAN/preinst"
   cp package.prerm    "${PACKAGE_ROOT_NAME}/DEBIAN/prerm"
   cp package-service  "${PACKAGE_ROOT_NAME}/etc/init.d/${PACKAGE}"
-  cp ${PACKAGE_WAR_PATH} "${PACKAGE_ROOT_NAME}/var/lib/tomcat8/webapps/
+  cp ${PACKAGE_WAR_PATH} "${PACKAGE_ROOT_NAME}/var/lib/tomcat8/webapps/"
 
   sed -i -- "s/_VERSION_/${PACKAGE_VERSION}/g" "${PACKAGE_ROOT_NAME}/DEBIAN/control"
   sed -i -- "s/_GIT_COMMIT_/${GIT_SHA}/g"      "${PACKAGE_ROOT_NAME}/DEBIAN/control"
