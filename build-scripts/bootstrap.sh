@@ -3,7 +3,7 @@ set -e
 
 function define_variables() {
   export PACKAGE=ekl-opengrok
-  #export JAVA_HOME=/usr/lib/jvm/java-6-sun
+  export JAVA_HOME=/usr/lib/jvm/java-6-sun
   export ANT="/usr/bin/ant"
   export SSH_USER=fk-build-user
   export VERSION_PREFIX=1
