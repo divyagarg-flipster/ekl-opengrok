@@ -4,7 +4,7 @@ set -e
 function define_variables() {
   export PACKAGE=ekl-opengrok
   export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home
-  export ANT="/usr/local/bin/ant"
+  export ANT="/usr/bin/ant"
   export SSH_USER=fk-build-user
   export VERSION_PREFIX=1
   export GIT_SHA=$(git log | head -1 | cut -f2 -d" " | cut -c1-6)
