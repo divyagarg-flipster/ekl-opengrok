@@ -1,0 +1,7 @@
+#! /bin/bash
+
+PKG=ekl-opengrok
+
+if [ "$1" == "purge" ]; then
+  rm -rf "/usr/share/$PKG" "/var/lib/$PKG" "/etc/init.d/$PKG" "/etc/$PKG"
+fi

@@ -1,0 +1,11 @@
+Package: ekl-opengrok
+Version: _VERSION_
+Section: ekart/supply-chain/ekl
+Priority: optional
+Architecture: all
+Essential: no
+Depends: oracle-java8-jdk
+Maintainer: Supply Chain Last Mile <scm-last-mile@flipkart.com>
+Provides: ekl-opengrok
+Homepage: git@github.com:divyagarg-flipster/ekl-opengrok.git
+Description: EKL OpenGrok build from _GIT_COMMIT_. Source at https://github.com/divyagarg-flipster/ekl-opengrok.git/_GIT_COMMIT_

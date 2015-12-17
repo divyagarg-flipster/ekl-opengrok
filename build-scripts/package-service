@@ -1,0 +1,195 @@
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:          ekl-opengrok
+# Required-Start:    $local_fs $remote_fs $network $syslog $named
+# Required-Stop:     $local_fs $remote_fs $network $syslog $named
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# X-Interactive:     true
+# Short-Description: Start/stop EKL OpenGrok Server
+### END INIT INFO
+
+function log() {
+   echo "[INFO]: $(date)": "$1" | tee -a "${LOGFILE}"
+}
+
+function initialize() {
+  PACKAGE="ekl-opengrok"
+  SLEEP_TIME_FOR_STOP=${STOP_SLEEP_TIME:-10}
+  SLEEP_TIME_FOR_START=${START_SLEEP_TIME:-5}
+  #EXEC_JAR="${PACKAGE}-1.0.0.jar"
+  MIN_JAVA_VERSION=1.8
+  # APP_HTTP_PORT="29050"
+  # APP_JMX_PORT="23051"
+  # APP_ADMIN_PORT="23052"
+  JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home"
+  # STARTUP_COMMAND="com.ekart.money.application.WalletApplication"
+  # APP_ROOT="/usr/share/${PACKAGE}"
+  # statusfile=appstatus.html
+  
+  source "/etc/default/${PACKAGE}"
+  touch "${LOGFILE}"
+}
+
+function verify_java() {
+  log "Verifying java version"
+  JAVA_EXEC=$(command -v java)
+  if [ -z "${JAVA_EXEC}" ]; then
+    log "Java not found in the system. Service can not start."
+    exit 1
+  else
+    log "Found java executable at ${JAVA_EXEC}"
+    java_version=$(java -version 2>&1 | awk -F '"' '/version/ {print $2}')
+    if [[ "${java_version}" < "${MIN_JAVA_VERSION}" ]]; then
+      log "Existing java version ${java_version} does not meet the min version: ${MIN_JAVA_VERSION}"
+      log "Service can not start"
+      exit 1
+    else         
+      log "Existing java version ${java_version} meets the min version: ${MIN_JAVA_VERSION}"
+    fi
+  fi
+}
+
+take_oor() {
+  log "Taking ${PACKAGE} Out-Of-Rotation..."
+  # curl -X POST http://localhost:29050/health/oor
+  # if [ $? -ne 0 ]; then
+    # log "OOR operation failed"
+  # else
+    log "OOR operation success"
+  # fi
+}
+
+make_bir()  {
+  log "Taking ${PACKAGE} Back-In-Rotation..."
+  # curl -X POST http://localhost:29050/health/bir
+  # if [ $? -ne 0 ]; then
+    # log "BIR operation failed"
+  # else
+    log "BIR operation success"
+  # fi
+}
+
+check_process() {
+  set +e
+  pgrep -f "java.*${PACKAGE}"
+  set -e
+}
+
+check_status() {
+  log "In check_status"
+  PID=$(check_process)
+  if [ -z "${PID}" ]; then
+    log "${PACKAGE} is not running."
+    echo "${PACKAGE} is not running."
+  else
+    log "${PACKAGE} is running at ${PID}"
+    echo "${PACKAGE} is running at ${PID}"
+  fi
+}
+
+restart_service() {
+  stop_service
+  start_service
+}
+
+start_service() {
+  log "In start_service"
+  
+  PID=$(check_process)
+
+  if [ -z "$PID" ]; then
+    verify_java
+    stop_service
+    log "Starting service ${PACKAGE}"
+    ulimit -n 30000
+
+    cd /usr/share/tomcat8/bin
+    catalina start >> "${LOGFILE}" 2>&1 &
+
+    log "Sleeping for ${SLEEP_TIME_FOR_START} seconds to wait for server to start"
+    sleep "${SLEEP_TIME_FOR_START}"
+
+    log "Getting server back in rotation"
+    make_bir
+  else
+    log "Process is already running at PID $PID"
+  fi
+}
+
+db_migrate()    {
+  log "db_migrate not yet implemented"
+  # sudo -u $USERNAME \
+  # java -cp /usr/share/$PACKAGE/resources/:/etc/$PACKAGE/:/var/lib/$PACKAGE/${EXEC_JAR}:/var/lib/$PACKAGE/lib/*:. \
+  # $STARTUP_COMMAND db migrate $CONFIG_FILE
+}
+
+stop_service()  {
+  take_oor
+  PID=$(check_process)
+
+  if [ -z "${PID}" ]; then
+    log "Process is already stopped"
+  else
+    log "Sleeping for ${SLEEP_TIME_FOR_STOP} seconds for incoming requests to finish"
+    sleep "${SLEEP_TIME_FOR_STOP}"
+
+    log "Process ${PACKAGE} is running with PID: ${PID}"
+
+    cd /usr/share/tomcat8/bin
+    catalina stop >> "${LOGFILE}" 2>&1 &
+
+    PID=$(check_process)
+    log "Process ${PACKAGE} is running with PID: ${PID}"
+    if [ ! -z "${PID}" ]; then
+      log "Process still running at pid ${PID}. Force killing process"
+      force_kill
+    fi
+  fi
+}
+
+force_kill()    {
+  pkill -f -9 "${PACKAGE}"
+}
+
+function main() {
+  initialize
+
+  case "$1" in
+    start)
+        start_service
+        ;;
+    stop)
+        stop_service
+        ;;
+    force_kill)
+        force_kill
+        ;;
+    import_keytool)
+        keytool --import -keystore /usr/lib/jvm/java-6-sun/jre/lib/security/cacerts -file "$2" -alias "$3"
+        ;;
+    migrate_db)
+        db_migrate
+        ;;
+    OOR)
+        take_oor
+        ;;
+    BIR)
+        make_bir
+        ;;
+    status)
+        check_status
+        ;;
+    restart)
+        restart_service
+        ;;
+    *)    echo "USAGE: $0 restart|start|stop|OOR|BIR|force_kill|migrate_db|status"
+        exit 3
+        ;;
+  esac
+}
+
+main "$@"
+
+
