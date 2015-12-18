@@ -99,7 +99,7 @@ function main() {
   log "Finished sourcing scripts"
 
   log "Building package"
-  #build_package
+  build_package
   log "Finished building package"
 
   log "Uploading package"
