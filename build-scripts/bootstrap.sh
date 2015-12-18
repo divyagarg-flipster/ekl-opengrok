@@ -17,7 +17,7 @@ function define_variables() {
   export PACKAGE_DEB_PREFIX="${PACKAGE}_${PACKAGE_VERSION}"
   export PACKAGE_DEB_NAME="${PACKAGE_DEB_PREFIX}_all.deb"
   export PACKAGE_DEB_PATH="${PACKAGE_TARGET_PATH}/${PACKAGE_DEB_NAME}"
-  export PACKAGE_WAR_NAME="source.jar"
+  export PACKAGE_WAR_NAME="source.war"
   export PACKAGE_WAR_PATH="${PACKAGE_TARGET_PATH}/${PACKAGE_WAR_NAME}"
 
 
@@ -65,18 +65,20 @@ function validate_environment() {
     exit 255
   fi
 
+   if [ ! -x "${ANT}" ]; then
+    log "${ANT} not found"
+    exit 255
+  fi
+
   if [ -z "${JAVA_HOME}" ]; then
     log "JAVA_HOME env variable is not set. For jdk-8 it could be something like /usr/lib/jvm/java-8-oracle"
     exit 255
   fi
 
-  if [ ! -x "${ANT}" ]; then
-    log "${ANT} not found"
-    exit 255
-  fi
+    log "Ant version: $(ant -version)"
   
-  log "Java version: $(java -version)"
-  log "Ant version: $(ant -version)"
+    log "Java version: $(java -version)"
+
 }
 
 function main() {
