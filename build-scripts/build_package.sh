@@ -17,7 +17,7 @@ function build_debian_package() {
   mkdir -p "${PACKAGE_ROOT_PATH}"
 
   mkdir -p "${PACKAGE_ROOT_NAME}/DEBIAN"
-
+  mkdir -p "${PACKAGE_ROOT_NAME}/var/log/flipkart/supply-chain/${PACKAGE}"
   mkdir -p "${PACKAGE_ROOT_NAME}/etc/${PACKAGE}"
   mkdir -p "${PACKAGE_ROOT_NAME}/etc/init.d"
   mkdir -p "${PACKAGE_ROOT_NAME}/usr/share/${PACKAGE}/public"
