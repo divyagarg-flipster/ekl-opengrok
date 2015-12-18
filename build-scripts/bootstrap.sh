@@ -103,11 +103,11 @@ function main() {
   log "Finished building package"
 
   log "Uploading package"
-  #upload_package
+  upload_package
   log "Finished uploading package"
 
   log "Deploying package"
-  #deploy_package
+  deploy_package
   log "Finished deploying package"
 }
 
