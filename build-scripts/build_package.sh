@@ -3,7 +3,7 @@ set -e
 
 function compile_application() {
   cd "${WORKSPACE}"
-  rm -rf "${PACKAGE_TARGET_PATH}"
+  #rm -rf "${PACKAGE_TARGET_PATH}"
   $ANT
 }
 
