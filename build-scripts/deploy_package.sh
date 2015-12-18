@@ -2,7 +2,7 @@
 set -e
 
 function get_server_list() {
-  SERVERS="${PACKAGE_BUILD_DIR}/scripts/server_${PACKAGE}.txt"
+  SERVERS="${PACKAGE_BUILD_DIR}/server_${PACKAGE}.txt"
   if [ ! -f "$SERVERS" ]; then
     log "server.txt not present for the package."
     exit 0
