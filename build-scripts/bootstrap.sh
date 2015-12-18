@@ -3,7 +3,7 @@ set -e
 
 function define_variables() {
   export PACKAGE=ekl-opengrok
-  export JAVA_HOME=/usr/lib/jvm/java-7-oracle
+  export JAVA_HOME=/usr/lib/jvm/java-8-oracle
   export ANT="/usr/bin/ant"
   export SSH_USER=fk-build-user
   export VERSION_PREFIX=1
@@ -76,7 +76,7 @@ function validate_environment() {
   fi
   
   log "Java version: $(java -version)"
-  log "Ant version: $($ANT -version)"
+  log "Ant version: $(ant -version)"
 }
 
 function main() {
