@@ -23,6 +23,7 @@ function build_debian_package() {
   mkdir -p "${PACKAGE_ROOT_NAME}/usr/share/${PACKAGE}/public"
   mkdir -p "${PACKAGE_ROOT_NAME}/usr/share/${PACKAGE}/resources"
   mkdir -p "${PACKAGE_ROOT_NAME}/var/lib/${PACKAGE}"
+  mkdir -p "${PACKAGE_ROOT_NAME}/var/lib/tomcat8/webapps/"
 
   cp package.control  "${PACKAGE_ROOT_NAME}/DEBIAN/control"
   cp package.postinst "${PACKAGE_ROOT_NAME}/DEBIAN/postinst"
