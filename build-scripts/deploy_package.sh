@@ -31,12 +31,12 @@ function deploy_deb_package() {
   else
     APT_CMD="sudo apt-get -qq"
 
-    log "${SERVER_LIST}"
+    log "Server list is: ${SERVER_LIST}"
     for SERVER in "${SERVER_LIST[@]}"; do
-      log "ssh ${SSH_OPTS} -t -t ${SSH_USER}@${SERVER} \"export DEBIAN_FRONTEND=noninteractive; ${APT_CMD} update && ${APT_CMD} install $PACKAGE=$PACKAGE_VERSION\""
-      log "${SERVER}"
-      ssh ${SSH_OPTS} -t -t "${SSH_USER}@${SERVER}" "export DEBIAN_FRONTEND=noninteractive; ${APT_CMD} update && ${APT_CMD} install ${PACKAGE}=${PACKAGE_VERSION}"
-      # ssh ${SSH_OPTS} -t -t "${SSH_USER}@flo-fkl-app2.stage.ch.flipkart.com" "export DEBIAN_FRONTEND=noninteractive && ${APT_CMD} update && ${APT_CMD} install ${PACKAGE}"
+      log "ssh ${SSH_OPTS_DEPLOY} -t -t ${SSH_USER}@${SERVER} \"export DEBIAN_FRONTEND=noninteractive; ${APT_CMD} update && ${APT_CMD} install $PACKAGE=$PACKAGE_VERSION\""
+      log "Server is ${SERVER}"
+      ssh ${SSH_OPTS_DEPLOY} -t -t "${SSH_USER}@${SERVER}" "export DEBIAN_FRONTEND=noninteractive; ${APT_CMD} update && ${APT_CMD} install ${PACKAGE}=${PACKAGE_VERSION}"
+
       
       ssh_status=$?
       if test $ssh_status -eq 0; then

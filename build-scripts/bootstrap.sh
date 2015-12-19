@@ -41,7 +41,8 @@ function define_variables() {
     exit 255;
   fi
   
-  export SSH_OPTS="-o CheckHostIP=no -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o BatchMode=yes"
+  export SSH_OPTS="-i $SSH_KEY -o CheckHostIP=no -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o BatchMode=yes"
+  export SSH_OPTS_DEPLOY="-o CheckHostIP=no -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o BatchMode=yes"
 }
 
 function log() {
