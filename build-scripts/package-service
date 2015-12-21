@@ -16,6 +16,7 @@ function log() {
 
 function initialize() {
   PACKAGE="ekl-opengrok"
+ LOGFILE="/var/log/flipkart/supply-chain/${PACKAGE}/${PACKAGE}.log"
   SLEEP_TIME_FOR_STOP=${STOP_SLEEP_TIME:-10}
   SLEEP_TIME_FOR_START=${START_SLEEP_TIME:-5}
   #EXEC_JAR="${PACKAGE}-1.0.0.jar"
