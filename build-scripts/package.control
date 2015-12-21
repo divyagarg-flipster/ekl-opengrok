@@ -5,7 +5,7 @@ Priority: optional
 Architecture: all
 Essential: no
 Build-Depends: cdbs,
- debhelper, oracle-java8-jdk , ant-optional, junit4, jflex (>= 1.5.0), liblucene4-java, libbcel-java(>= 5.2-6), libservlet2.4-java, exuberant-ctags
+ debhelper, oracle-java8-jdk , ant-optional, junit4, jflex (>= 1.5.0), libbcel-java(>= 5.2-6), libservlet2.4-java, exuberant-ctags
 Depends: oracle-java8-jdk | java2-runtime, exuberant-ctags (>= 1:5.6-1), ant, liblucene4-java, libbcel-java(>= 5.2-6)
 Maintainer: Supply Chain Last Mile <scm-last-mile@flipkart.com>
 Provides: ekl-opengrok
