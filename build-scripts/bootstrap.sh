@@ -27,7 +27,7 @@ function define_variables() {
   elif [ "$DEPLOYMENT_ENV" == 'ch' ]; then
     # APT_SERVERS="stage-build1.nm.flipkart.com stage-build1.ch.flipkart.com sb-ch-build1.ch.flipkart.com wzy-build1.ops.ch.flipkart.com"
     export SSH_KEY=/var/lib/jenkins/.ssh/fk-build-user.key.stage-ch.squeeze
-    export APT_SERVERS="stage-build1.ch.flipkart.com"
+    export APT_SERVERS="stage-build1.ch.flipkart.com stage-apt.nm.flipkart.com"
   elif [ "$DEPLOYMENT_ENV" == 'PRODUCTION' ]; then
     export APT_SERVERS="prod-build1.nm.flipkart.com wzy-build1.nm.flipkart.com"
   elif [ "$DEPLOYMENT_ENV" == 'MPIE' ]; then
