@@ -154,7 +154,7 @@ db_migrate()    {
 stop_service()  {
   take_oor
   touch ${SERVICE_STOP_FILE}
-  sleep 400
+  return
   PID=$(check_process)
   if [ -z "${PID}" ]; then
     log "Process is already stopped"
