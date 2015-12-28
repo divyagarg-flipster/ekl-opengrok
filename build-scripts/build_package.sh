@@ -25,6 +25,8 @@ function build_debian_package() {
   mkdir -p "${PACKAGE_ROOT_NAME}/var/lib/${PACKAGE}"
   mkdir -p "${PACKAGE_ROOT_NAME}/var/lib/tomcat8/webapps/"
 
+
+
   cp package.control  "${PACKAGE_ROOT_NAME}/DEBIAN/control"
   cp package.postinst "${PACKAGE_ROOT_NAME}/DEBIAN/postinst"
   cp package.postrm   "${PACKAGE_ROOT_NAME}/DEBIAN/postrm"
@@ -32,6 +34,8 @@ function build_debian_package() {
   cp package.prerm    "${PACKAGE_ROOT_NAME}/DEBIAN/prerm"
   cp package-service  "${PACKAGE_ROOT_NAME}/etc/init.d/${PACKAGE}"
   cp ${PACKAGE_WAR_PATH} "${PACKAGE_ROOT_NAME}/var/lib/tomcat8/webapps/"
+  cp repo_ekl-opengrok.txt "${PACKAGE_ROOT_NAME}/var/lib/${PACKAGE}"
+  cp ${OPENGROK_TAR_PATH} "${PACKAGE_ROOT_NAME}/var/lib/${PACKAGE}"
 
   sed -i -- "s/_VERSION_/${PACKAGE_VERSION}/g" "${PACKAGE_ROOT_NAME}/DEBIAN/control"
   sed -i -- "s/_GIT_COMMIT_/${GIT_SHA}/g"      "${PACKAGE_ROOT_NAME}/DEBIAN/control"

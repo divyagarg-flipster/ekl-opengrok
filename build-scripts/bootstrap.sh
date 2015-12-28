@@ -19,6 +19,7 @@ function define_variables() {
   export PACKAGE_DEB_PATH="${PACKAGE_TARGET_PATH}/${PACKAGE_DEB_NAME}"
   export PACKAGE_WAR_NAME="source.war"
   export PACKAGE_WAR_PATH="${PACKAGE_BUILD_DIR}/${PACKAGE_WAR_NAME}"
+  export OPENGROK_TAR_PATH="${WORKSPACE}/opengrok-0.12.1.tar.gz"
 
 
   # TODO: Add ssh keys in other environments

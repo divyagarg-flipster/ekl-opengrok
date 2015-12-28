@@ -1,0 +1,2 @@
+ekl-document-services:git@github.com:Flipkart/ekl-document-services.git
+fk-ekart-firstmile:git@github.com:Flipkart/fk-ekart-firstmile.git

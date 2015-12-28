@@ -28,7 +28,9 @@ function initialize() {
   # STARTUP_COMMAND="com.ekart.money.application.WalletApplication"
   # APP_ROOT="/usr/share/${PACKAGE}"
   # statusfile=appstatus.html
-  
+  OPENGROK_PATH="/var/lib/ekl-opengrok"
+  REPOSITORY_PATH="${OPENGROK_PATH}/repositories/src_root"
+
   source "/etc/default/${PACKAGE}"
   touch "${LOGFILE}"
 }
@@ -53,13 +55,11 @@ function verify_java() {
 }
 
 take_oor() {
-  log "Taking ${PACKAGE} Out-Of-Rotation..."
-  # curl -X POST http://localhost:29050/health/oor
-  # if [ $? -ne 0 ]; then
-    # log "OOR operation failed"
-  # else
+    log "Taking ${PACKAGE} Out-Of-Rotation..."
+    cd /usr/share/tomcat8/bin
+    catalina stop >> "${LOGFILE}" 2>&1 &
     log "OOR operation success"
-  # fi
+
 }
 
 make_bir()  {
@@ -74,7 +74,7 @@ make_bir()  {
 
 check_process() {
   set +e
-  pgrep -f "java.*${PACKAGE}"
+  pgrep -f "index_repositories*"
   set -e
 }
 
@@ -95,6 +95,21 @@ restart_service() {
   start_service
 }
 
+unpack_opengrok() {
+
+   if [ ! -d "${OPENGROK_PATH}/opengrok-0.12.1" ]; then
+    # Control will enter here if OPENGROK_PATH doesn't exist.
+       mkdir -p ${OPENGROK_PATH}
+       cd ${OPENGROK_PATH}
+       tar xzf opengrok-0.12.1.tar.gz
+       cd -
+    fi
+
+}
+
+
+
+
 start_service() {
   log "In start_service"
   
@@ -108,6 +123,11 @@ start_service() {
 
     cd /usr/share/tomcat8/bin
     catalina start >> "${LOGFILE}" 2>&1 &
+
+    log "Unpacking opengrok"
+    unpack_opengrok
+
+    index_repositories.sh &
 
     log "Sleeping for ${SLEEP_TIME_FOR_START} seconds to wait for server to start"
     sleep "${SLEEP_TIME_FOR_START}"
@@ -129,20 +149,18 @@ db_migrate()    {
 stop_service()  {
   take_oor
   PID=$(check_process)
-
   if [ -z "${PID}" ]; then
     log "Process is already stopped"
   else
     log "Sleeping for ${SLEEP_TIME_FOR_STOP} seconds for incoming requests to finish"
     sleep "${SLEEP_TIME_FOR_STOP}"
 
-    log "Process ${PACKAGE} is running with PID: ${PID}"
+    log "Process index_repo is running with PID: ${PID}"
 
-    cd /usr/share/tomcat8/bin
-    catalina stop >> "${LOGFILE}" 2>&1 &
+
 
     PID=$(check_process)
-    log "Process ${PACKAGE} is running with PID: ${PID}"
+    log "Process index_repo is running with PID: ${PID}"
     if [ ! -z "${PID}" ]; then
       log "Process still running at pid ${PID}. Force killing process"
       force_kill
