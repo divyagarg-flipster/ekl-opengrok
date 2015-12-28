@@ -16,9 +16,9 @@ prepare_repositories() {
     mkdir -p ${REPOSITORY_PATH}
    fi
 
-   chmod +777 ${REPOSITORY_PATH}
+   chmod 777 ${REPOSITORY_PATH}
    cd ${REPOSITORY_PATH}
-   
+
 
    while IFS='' read -r line || [[ -n "$line" ]]; do
     echo "Text read from file: $line"
