@@ -25,7 +25,7 @@ prepare_repositories() {
     git_repo_name=$(echo $line | grep -o "^.*:" | cut -d':' -f1)
     echo "Repo Name: $git_repo_name"
     echo "Repo Url: $git_repo_url"
-    if [ ! -d "${REPOSITORY_PATH}/git_repo_name" ]; then
+    if [ ! -d "${REPOSITORY_PATH}/${git_repo_name}" ]; then
         git clone ${git_repo_url}
     fi
     cd ${git_repo_name} || exit 0
