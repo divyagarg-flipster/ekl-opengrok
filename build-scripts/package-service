@@ -124,9 +124,12 @@ start_service() {
     cd /usr/share/tomcat8/bin
     catalina start >> "${LOGFILE}" 2>&1 &
 
+
     log "Unpacking opengrok"
     unpack_opengrok
 
+    cd ${OPENGROK_PATH}
+    chmod +x index_repositories.sh
     index_repositories.sh &
 
     log "Sleeping for ${SLEEP_TIME_FOR_START} seconds to wait for server to start"
