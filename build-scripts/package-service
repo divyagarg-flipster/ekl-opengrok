@@ -163,7 +163,7 @@ stop_service()  {
     kill -9 ${PID}
     if [ ! -z "${PID}" ]; then
       log "Process still running at pid ${PID}. Force killing process"
-      force_kill
+      # force_kill
     fi
   fi
 }
