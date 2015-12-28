@@ -115,7 +115,7 @@ start_service() {
   
   PID=$(check_process)
 
-  stop_service
+  #stop_service
   if [ -z "$PID" ]; then
     verify_java
 
