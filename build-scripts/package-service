@@ -115,9 +115,10 @@ start_service() {
   
   PID=$(check_process)
 
+  stop_service
   if [ -z "$PID" ]; then
     verify_java
-    stop_service
+
     log "Starting service ${PACKAGE}"
     ulimit -n 30000
 
