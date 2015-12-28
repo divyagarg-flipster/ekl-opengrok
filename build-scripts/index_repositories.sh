@@ -13,7 +13,7 @@ prepare_repositories() {
    fi
 
    if [ ! -d "${REPOSITORY_PATH}" ]; then
-    mkdir -P ${REPOSITORY_PATH}
+    mkdir -p ${REPOSITORY_PATH}
    fi
 
    cd ${REPOSITORY_PATH}
@@ -45,9 +45,9 @@ function log() {
 }
 
 while true; do
-    log "Preparing repositories at time: "+$(date)
+    log "Preparing repositories"
     prepare_repositories
-    log "Indexing repositories at time: "+$(date)
+    log "Indexing repositories"
     #index_repositories
     sleep 300
 done
