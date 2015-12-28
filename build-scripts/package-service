@@ -30,6 +30,7 @@ function initialize() {
   export # statusfile=appstatus.html
   export OPENGROK_PATH="/var/lib/${PACKAGE}"
   export REPOSITORY_PATH="${OPENGROK_PATH}/repositories/src_root"
+  export SERVICE_STOP_FILE="${OPENGROK_PATH}/stop_service.txt"
 
   source "/etc/default/${PACKAGE}"
   touch "${LOGFILE}"
@@ -74,7 +75,7 @@ make_bir()  {
 
 check_process() {
   set +e
-  pgrep -f "index_repositories*"
+  pgrep -f "index_repositories.sh"
   set -e
 }
 
@@ -115,7 +116,7 @@ start_service() {
   
   PID=$(check_process)
 
-  #stop_service
+  stop_service
   if [ -z "$PID" ]; then
     verify_java
 
@@ -152,6 +153,8 @@ db_migrate()    {
 
 stop_service()  {
   take_oor
+  touch ${SERVICE_STOP_FILE}
+  sleep 400
   PID=$(check_process)
   if [ -z "${PID}" ]; then
     log "Process is already stopped"
@@ -161,6 +164,7 @@ stop_service()  {
 
     log "Process index_repo is running with PID: ${PID}"
     kill -9 ${PID}
+    log "Successfully stopped service ${PID}"
     if [ ! -z "${PID}" ]; then
       log "Process still running at pid ${PID}. Force killing process"
       # force_kill

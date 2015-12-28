@@ -27,7 +27,7 @@ prepare_repositories() {
     git_repo_name=$(echo $line | grep -o "^.*:" | cut -d':' -f1)
     echo "Repo Name: $git_repo_name"
     echo "Repo Url: $git_repo_url"
-    rm -rf "${REPOSITORY_PATH}/${git_repo_name}"
+    # rm -rf "${REPOSITORY_PATH}/${git_repo_name}"
 
 
     # if [ ! -d "${REPOSITORY_PATH}/${git_repo_name}" ]; then
@@ -35,7 +35,7 @@ prepare_repositories() {
     # fi
     # cd ${git_repo_name} || exit 0
     # git pull origin master
-    cd ..
+    # cd ..
    done < "$REPOS"
 
 }
@@ -49,12 +49,21 @@ function log() {
    echo "[INFO]: $(date)": "$1" | tee -a "${LOGFILE}"
 }
 
+function main(){
+
 while true; do
+    # Look for a file
+    if [ -f ${SERVICE_STOP_FILE} ]; then
+        log "Stooping process"
+        rm -f ${SERVICE_STOP_FILE}
+        return
+    fi
     log "Preparing repositories"
-    prepare_repositories
+    # prepare_repositories
     log "Indexing repositories"
-    #index_repositories
+    index_repositories
     sleep 300
 done
+}
 
-
+main
