@@ -21,14 +21,14 @@ prepare_repositories() {
    while IFS='' read -r line || [[ -n "$line" ]]; do
     echo "Text read from file: $line"
 
-    repo_name=$(echo $line | grep -o ":.*$" | cut -f2- -d':')
-    git_repo_url=$(echo $line | grep -o "^.*:" | cut -d':' -f1)
-    echo $repo_name
-    echo $git_repo_url
-    if [ ! -d "${REPOSITORY_PATH}/repo_name" ]; then
-        git clone $git_repo_url
+    git_repo_url=$(echo $line | grep -o ":.*$" | cut -f2- -d':')
+    git_repo_name=$(echo $line | grep -o "^.*:" | cut -d':' -f1)
+    echo "Repo Name: $git_repo_name"
+    echo "Repo Url: $git_repo_url"
+    if [ ! -d "${REPOSITORY_PATH}/git_repo_name" ]; then
+        git clone ${git_repo_url}
     fi
-    cd repo_name || exit 0
+    cd ${git_repo_name} || exit 0
     git pull origin master
     cd ..
    done < "$REPOS"
