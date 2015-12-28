@@ -169,7 +169,7 @@ stop_service()  {
 }
 
 force_kill()    {
-  pkill -f "${PACKAGE}"
+  pkill -9 -f "index_repositories.sh"
 }
 
 function main() {
