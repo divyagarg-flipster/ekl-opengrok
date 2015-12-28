@@ -28,7 +28,7 @@ function initialize() {
   # STARTUP_COMMAND="com.ekart.money.application.WalletApplication"
   # APP_ROOT="/usr/share/${PACKAGE}"
   # statusfile=appstatus.html
-  OPENGROK_PATH="/var/lib/ekl-opengrok"
+  OPENGROK_PATH="/var/lib/${PACKAGE}"
   REPOSITORY_PATH="${OPENGROK_PATH}/repositories/src_root"
 
   source "/etc/default/${PACKAGE}"
@@ -130,7 +130,7 @@ start_service() {
 
     cd ${OPENGROK_PATH}
     chmod +x index_repositories.sh
-    index_repositories.sh &
+    ./index_repositories.sh &
 
     log "Sleeping for ${SLEEP_TIME_FOR_START} seconds to wait for server to start"
     sleep "${SLEEP_TIME_FOR_START}"
