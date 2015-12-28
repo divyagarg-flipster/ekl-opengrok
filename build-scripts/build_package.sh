@@ -4,7 +4,7 @@ set -e
 function compile_application() {
   cd "${WORKSPACE}"
   #rm -rf "${PACKAGE_TARGET_PATH}"
-  $ANT
+  #$ANT
 }
 
 function build_debian_package() {

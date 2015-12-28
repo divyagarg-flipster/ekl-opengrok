@@ -18,7 +18,7 @@ function define_variables() {
   export PACKAGE_DEB_NAME="${PACKAGE_DEB_PREFIX}_all.deb"
   export PACKAGE_DEB_PATH="${PACKAGE_TARGET_PATH}/${PACKAGE_DEB_NAME}"
   export PACKAGE_WAR_NAME="source.war"
-  export PACKAGE_WAR_PATH="${PACKAGE_TARGET_PATH}/${PACKAGE_WAR_NAME}"
+  export PACKAGE_WAR_PATH="${PACKAGE_BUILD_DIR}/${PACKAGE_WAR_NAME}"
 
 
   # TODO: Add ssh keys in other environments

@@ -9,7 +9,6 @@ dist
 coverage
 target
 opengrok.jar
-source.war
 prj.el
 nbproject/private
 generatedsrc
