@@ -52,6 +52,7 @@ function log() {
 function main(){
 
 while true; do
+
     # Look for a file
     if [ -f ${SERVICE_STOP_FILE} ]; then
         log "Stooping process"
