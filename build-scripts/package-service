@@ -124,7 +124,7 @@ start_service() {
     ulimit -n 30000
 
     cd /usr/share/tomcat8/bin
-    catalina start >> "${LOGFILE}" 2>&1 &
+    ./catalina start >> "${LOGFILE}" 2>&1 &
 
 
     log "Unpacking opengrok"
