@@ -160,11 +160,7 @@ stop_service()  {
     sleep "${SLEEP_TIME_FOR_STOP}"
 
     log "Process index_repo is running with PID: ${PID}"
-
-
-
-    PID=$(check_process)
-    log "Process index_repo is running with PID: ${PID}"
+    kill -9 ${PID}
     if [ ! -z "${PID}" ]; then
       log "Process still running at pid ${PID}. Force killing process"
       force_kill
@@ -173,7 +169,7 @@ stop_service()  {
 }
 
 force_kill()    {
-  pkill -f -9 "${PACKAGE}"
+  pkill -f "${PACKAGE}"
 }
 
 function main() {
