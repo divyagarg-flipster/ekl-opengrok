@@ -15,21 +15,21 @@ function log() {
 }
 
 function initialize() {
-  PACKAGE="ekl-opengrok"
- LOGFILE="/var/log/flipkart/supply-chain/${PACKAGE}/${PACKAGE}.log"
-  SLEEP_TIME_FOR_STOP=${STOP_SLEEP_TIME:-10}
-  SLEEP_TIME_FOR_START=${START_SLEEP_TIME:-5}
-  #EXEC_JAR="${PACKAGE}-1.0.0.jar"
-  MIN_JAVA_VERSION=1.8
-  # APP_HTTP_PORT="29050"
-  # APP_JMX_PORT="23051"
-  # APP_ADMIN_PORT="23052"
-  JAVA_HOME="/usr/lib/jvm/jdk-8-oracle-x64/jre/"
-  # STARTUP_COMMAND="com.ekart.money.application.WalletApplication"
-  # APP_ROOT="/usr/share/${PACKAGE}"
-  # statusfile=appstatus.html
-  OPENGROK_PATH="/var/lib/${PACKAGE}"
-  REPOSITORY_PATH="${OPENGROK_PATH}/repositories/src_root"
+  export PACKAGE="ekl-opengrok"
+  export LOGFILE="/var/log/flipkart/supply-chain/${PACKAGE}/${PACKAGE}.log"
+  export SLEEP_TIME_FOR_STOP=${STOP_SLEEP_TIME:-10}
+  export SLEEP_TIME_FOR_START=${START_SLEEP_TIME:-5}
+  export #EXEC_JAR="${PACKAGE}-1.0.0.jar"
+  export MIN_JAVA_VERSION=1.8
+  export # APP_HTTP_PORT="29050"
+  export # APP_JMX_PORT="23051"
+  export # APP_ADMIN_PORT="23052"
+  export JAVA_HOME="/usr/lib/jvm/jdk-8-oracle-x64/jre/"
+  export # STARTUP_COMMAND="com.ekart.money.application.WalletApplication"
+  export # APP_ROOT="/usr/share/${PACKAGE}"
+  export # statusfile=appstatus.html
+  export OPENGROK_PATH="/var/lib/${PACKAGE}"
+  export REPOSITORY_PATH="${OPENGROK_PATH}/repositories/src_root"
 
   source "/etc/default/${PACKAGE}"
   touch "${LOGFILE}"

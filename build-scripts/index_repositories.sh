@@ -38,8 +38,12 @@ prepare_repositories() {
 index_repositories() {
     cd ${OPENGROK_PATH}
     OPENGROK_INSTANCE_BASE=opengrok-0.12.1 opengrok-0.12.1/bin/OpenGrok index ${REPOSITORY_PATH}
-
 }
+
+function log() {
+   echo "[INFO]: $(date)": "$1" | tee -a "${LOGFILE}"
+}
+
 while true; do
     log "Preparing repositories at time: "+$(date)
     prepare_repositories
