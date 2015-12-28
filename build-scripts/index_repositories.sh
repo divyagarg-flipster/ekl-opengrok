@@ -16,7 +16,9 @@ prepare_repositories() {
     mkdir -p ${REPOSITORY_PATH}
    fi
 
+   chmod +777 ${REPOSITORY_PATH}
    cd ${REPOSITORY_PATH}
+   
 
    while IFS='' read -r line || [[ -n "$line" ]]; do
     echo "Text read from file: $line"
@@ -25,11 +27,14 @@ prepare_repositories() {
     git_repo_name=$(echo $line | grep -o "^.*:" | cut -d':' -f1)
     echo "Repo Name: $git_repo_name"
     echo "Repo Url: $git_repo_url"
-    if [ ! -d "${REPOSITORY_PATH}/${git_repo_name}" ]; then
-        git clone ${git_repo_url}
-    fi
-    cd ${git_repo_name} || exit 0
-    git pull origin master
+    rm -rf "${REPOSITORY_PATH}/${git_repo_name}"
+
+
+    # if [ ! -d "${REPOSITORY_PATH}/${git_repo_name}" ]; then
+        # git clone ${git_repo_url}
+    # fi
+    # cd ${git_repo_name} || exit 0
+    # git pull origin master
     cd ..
    done < "$REPOS"
 
