@@ -41,6 +41,7 @@ prepare_repositories() {
 }
 
 index_repositories() {
+    log "Indexing repositories"
     cd ${OPENGROK_PATH}
     OPENGROK_INSTANCE_BASE=opengrok-0.12.1 opengrok-0.12.1/bin/OpenGrok index ${REPOSITORY_PATH}
 }
@@ -52,7 +53,7 @@ function log() {
 function main(){
 
 while true; do
-
+    echo "In index_repositories file main function"
     # Look for a file
     if [ -f ${SERVICE_STOP_FILE} ]; then
         log "Stooping process"
@@ -61,7 +62,6 @@ while true; do
     fi
     log "Preparing repositories"
     # prepare_repositories
-    log "Indexing repositories"
     index_repositories
     sleep 300
 done
