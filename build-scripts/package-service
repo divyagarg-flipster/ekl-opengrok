@@ -130,12 +130,12 @@ start_service() {
     log "Unpacking opengrok"
     unpack_opengrok
 
+    log "Sleeping for ${SLEEP_TIME_FOR_START} seconds to wait for server to start"
+    sleep "${SLEEP_TIME_FOR_START}"
+
     cd ${OPENGROK_PATH}
     chmod +x index_repositories.sh
     ./index_repositories.sh &
-
-    log "Sleeping for ${SLEEP_TIME_FOR_START} seconds to wait for server to start"
-    sleep "${SLEEP_TIME_FOR_START}"
 
     log "Getting server back in rotation"
     make_bir
