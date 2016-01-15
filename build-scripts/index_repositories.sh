@@ -5,7 +5,6 @@
 prepare_repositories() {
    # Read repo.txt file to get all repos and their github url
    # In loop for each repo
-   echo "In Prepare Repo"
    REPOS="${OPENGROK_PATH}/repo_${PACKAGE}.txt"
    if [ ! -f "$REPOS" ]; then
     log "repo.txt not present for the package."
@@ -20,24 +19,44 @@ prepare_repositories() {
    cd ${REPOSITORY_PATH}
 
 
-   while IFS='' read -r line || [[ -n "$line" ]]; do
-    echo "Text read from file: $line"
+#   while IFS='' read -r line || [[ -n "$line" ]]; do
+#    echo "Text read from file: $line"
+#
+#    git_repo_url=$(echo $line | grep -o ":.*$" | cut -f2- -d':')
+#    git_repo_name=$(echo $line | grep -o "^.*:" | cut -d':' -f1)
+#    echo "Repo Name: $git_repo_name"
+#    echo "Repo Url: $git_repo_url"
+#    # rm -rf "${REPOSITORY_PATH}/${git_repo_name}"
+#
+#
+#    if [ ! -d "${REPOSITORY_PATH}/${git_repo_name}" ]; then
+#        git clone ${git_repo_url}
+#    fi
+#    cd ${git_repo_name} || exit 0
+#    echo "Pulling Repo : ${git_repo_name}"
+#    git pull origin master
+#    cd ..
+#   done < "$REPOS"
 
-    git_repo_url=$(echo $line | grep -o ":.*$" | cut -f2- -d':')
-    git_repo_name=$(echo $line | grep -o "^.*:" | cut -d':' -f1)
-    echo "Repo Name: $git_repo_name"
-    echo "Repo Url: $git_repo_url"
-    # rm -rf "${REPOSITORY_PATH}/${git_repo_name}"
+   cat REPOS|while read line; do
+       echo "Text read from file: $line"
+
+        git_repo_url=$(echo $line | grep -o ":.*$" | cut -f2- -d':')
+        git_repo_name=$(echo $line | grep -o "^.*:" | cut -d':' -f1)
+        echo "Repo Name: $git_repo_name"
+        echo "Repo Url: $git_repo_url"
+        # rm -rf "${REPOSITORY_PATH}/${git_repo_name}"
 
 
-    if [ ! -d "${REPOSITORY_PATH}/${git_repo_name}" ]; then
-        git clone ${git_repo_url}
-    fi
-    cd ${git_repo_name} || exit 0
-    echo "Pulling Repo : ${git_repo_name}"
-    git pull origin master
-    cd ..
-   done < "$REPOS"
+        if [ ! -d "${REPOSITORY_PATH}/${git_repo_name}" ]; then
+            echo 'Cloning repo ${git_repo_name}'
+            git clone ${git_repo_url}
+        fi
+        cd ${git_repo_name} || exit 0
+        echo "Pulling Repo : ${git_repo_name}"
+        git pull origin master
+        cd ..
+   done
 
 }
 
