@@ -38,7 +38,7 @@ prepare_repositories() {
 #    cd ..
 #   done < "$REPOS"
 
-   cat REPOS|while read line; do
+   cat $REPOS|while read line; do
        echo "Text read from file: $line"
 
         git_repo_url=$(echo $line | grep -o ":.*$" | cut -f2- -d':')
