@@ -5,7 +5,7 @@
 prepare_repositories() {
    # Read repo.txt file to get all repos and their github url
    # In loop for each repo
-
+   echo "In Prepare Repo"
    REPOS="${OPENGROK_PATH}/repo_${PACKAGE}.txt"
    if [ ! -f "$REPOS" ]; then
     log "repo.txt not present for the package."
