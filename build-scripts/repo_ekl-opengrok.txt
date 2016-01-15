@@ -1,2 +1,14 @@
 ekl-document-services:git@github.com:Flipkart/ekl-document-services.git
+fk-ekart-field:git@github.com:Flipkart/fk-ekart-field.git
+fk-ekart-admapp:git@github.com:Flipkart/fk-ekart-admapp.git
+fk-ekart-toolkit:git@github.com:Flipkart/fk-ekart-toolkit.git
 fk-ekart-firstmile:git@github.com:Flipkart/fk-ekart-firstmile.git
+ekl-fsd:git@github.com:Flipkart/ekl-fsd.git
+ekl-erp-fklogistics:git@github.com:Flipkart/ekl-erp-fklogistics.git
+ekl-casper:git@github.com:Flipkart/ekl-casper.git
+ekl-call-bridge:git@github.com:Flipkart/ekl-call-bridge.git
+ekl-elixir:git@github.com:Flipkart/ekl-elixir.git
+ekart-apps-automation:git@github.com:Flipkart/ekart-apps-automation.git
+fkl-shipping:git@github.com:Flipkart/fkl-shipping.git
+fkl-crons:git@github.com:Flipkart/fkl-crons.git
+

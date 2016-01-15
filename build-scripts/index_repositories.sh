@@ -30,12 +30,13 @@ prepare_repositories() {
     # rm -rf "${REPOSITORY_PATH}/${git_repo_name}"
 
 
-    # if [ ! -d "${REPOSITORY_PATH}/${git_repo_name}" ]; then
-        # git clone ${git_repo_url}
-    # fi
-    # cd ${git_repo_name} || exit 0
-    # git pull origin master
-    # cd ..
+    if [ ! -d "${REPOSITORY_PATH}/${git_repo_name}" ]; then
+        git clone ${git_repo_url}
+    fi
+    cd ${git_repo_name} || exit 0
+    echo "Pulling Repo : ${git_repo_name}"
+    git pull origin master
+    cd ..
    done < "$REPOS"
 
 }
@@ -61,7 +62,8 @@ while true; do
         return
     fi
     log "Preparing repositories"
-    # prepare_repositories
+    prepare_repositories
+    log "Indexing the repos"
     index_repositories
     sleep 300
 done
