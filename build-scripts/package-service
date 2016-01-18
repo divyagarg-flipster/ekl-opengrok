@@ -19,20 +19,12 @@ function initialize() {
   export LOGFILE="/var/log/flipkart/supply-chain/${PACKAGE}/${PACKAGE}.log"
   export SLEEP_TIME_FOR_STOP=${STOP_SLEEP_TIME:-10}
   export SLEEP_TIME_FOR_START=${START_SLEEP_TIME:-5}
-  export #EXEC_JAR="${PACKAGE}-1.0.0.jar"
   export MIN_JAVA_VERSION=1.8
-  export # APP_HTTP_PORT="29050"
-  export # APP_JMX_PORT="23051"
-  export # APP_ADMIN_PORT="23052"
   export JAVA_HOME="/usr/lib/jvm/jdk-8-oracle-x64/jre/"
-  export # STARTUP_COMMAND="com.ekart.money.application.WalletApplication"
-  export # APP_ROOT="/usr/share/${PACKAGE}"
-  export # statusfile=appstatus.html
   export OPENGROK_PATH="/var/lib/${PACKAGE}"
   export REPOSITORY_PATH="${OPENGROK_PATH}/repositories/src_root"
   export SERVICE_STOP_FILE="${OPENGROK_PATH}/stop_service.txt"
   export USERNAME="fk-supply-chain"
-
   source "/etc/default/${PACKAGE}"
   touch "${LOGFILE}"
 }
@@ -66,12 +58,7 @@ take_oor() {
 
 make_bir()  {
   log "Taking ${PACKAGE} Back-In-Rotation..."
-  # curl -X POST http://localhost:29050/health/bir
-  # if [ $? -ne 0 ]; then
-    # log "BIR operation failed"
-  # else
-    log "BIR operation success"
-  # fi
+  log "BIR operation success"
 }
 
 check_process() {
@@ -126,28 +113,21 @@ cron_job() {
 
 start_service() {
   log "In start_service"
-
   PID=$(check_process)
-
   stop_service
   if [ -z "$PID" ]; then
     verify_java
-
+    cron_job
     log "Starting service ${PACKAGE}"
     ulimit -n 30000
     mkdir -p /usr/share/tomcat8/logs
     cd /usr/share/tomcat8/bin
     ./catalina.sh start >> "${LOGFILE}" 2>&1 &
 
-
-
     log "Unpacking opengrok"
     unpack_opengrok
-
     log "Sleeping for ${SLEEP_TIME_FOR_START} seconds to wait for server to start"
     sleep "${SLEEP_TIME_FOR_START}"
-
-     cron_job
 
     log "Getting server back in rotation"
     make_bir
@@ -174,15 +154,16 @@ stop_service()  {
     log "Successfully stopped service ${PID}"
     if [ ! -z "${PID}" ]; then
       log "Process still running at pid ${PID}. Force killing process"
-      force_kill
+#      force_kill
+       pkill -9 -f ${PID}
     fi
   fi
 }
 
-force_kill()    {
-    PID=$(check_process)
-    pkill -9 -f ${PID}
-}
+#force_kill()    {
+#    PID=$(check_process)
+#
+#}
 
 function main() {
   initialize
@@ -211,7 +192,6 @@ function main() {
         ;;
     status)
         check_status
-        #test_function
         ;;
     restart)
         restart_service
