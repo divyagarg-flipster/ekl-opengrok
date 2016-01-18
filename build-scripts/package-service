@@ -127,7 +127,7 @@ start_service() {
              mkdir -p /usr/share/tomcat8/logs
         fi
     cd /usr/share/tomcat8/bin
-    ./catalina.sh start >> "${LOGFILE}" 2>&1 &
+    ./catalina start >> "${LOGFILE}" 2>&1 &
 
     log "Unpacking opengrok"
     unpack_opengrok
