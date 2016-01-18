@@ -114,13 +114,18 @@ cron_job() {
 start_service() {
   log "In start_service"
   PID=$(check_process)
-  stop_service
+    stop_service
   if [ -z "$PID" ]; then
+    log "Starting service ${PACKAGE}"
     verify_java
     cron_job
-    log "Starting service ${PACKAGE}"
+
     ulimit -n 30000
-    mkdir -p /usr/share/tomcat8/logs
+
+     if [ ! -d "/usr/share/tomcat8/logs" ]; then
+            echo 'Making directory for tomcat logs'
+             mkdir -p /usr/share/tomcat8/logs
+        fi
     cd /usr/share/tomcat8/bin
     ./catalina.sh start >> "${LOGFILE}" 2>&1 &
 
