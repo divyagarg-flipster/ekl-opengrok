@@ -139,6 +139,7 @@ start_service() {
     log "Sleeping for ${SLEEP_TIME_FOR_START} seconds to wait for server to start"
     sleep "${SLEEP_TIME_FOR_START}"
 
+    test_function
     #cd ${OPENGROK_PATH}
     #chmod +x index_repositories.sh
     #./index_repositories.sh &
