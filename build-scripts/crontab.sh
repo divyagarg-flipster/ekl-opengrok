@@ -14,29 +14,9 @@ prepare_repositories() {
    if [ ! -d "${REPOSITORY_PATH}" ]; then
     mkdir -p ${REPOSITORY_PATH}
    fi
-
-   chmod 777 ${REPOSITORY_PATH}
    cd ${REPOSITORY_PATH}
 
 
-#   while IFS='' read -r line || [[ -n "$line" ]]; do
-#    echo "Text read from file: $line"
-#
-#    git_repo_url=$(echo $line | grep -o ":.*$" | cut -f2- -d':')
-#    git_repo_name=$(echo $line | grep -o "^.*:" | cut -d':' -f1)
-#    echo "Repo Name: $git_repo_name"
-#    echo "Repo Url: $git_repo_url"
-#    # rm -rf "${REPOSITORY_PATH}/${git_repo_name}"
-#
-#
-#    if [ ! -d "${REPOSITORY_PATH}/${git_repo_name}" ]; then
-#        git clone ${git_repo_url}
-#    fi
-#    cd ${git_repo_name} || exit 0
-#    echo "Pulling Repo : ${git_repo_name}"
-#    git pull origin master
-#    cd ..
-#   done < "$REPOS"
 
    cat $REPOS|while read line; do
        echo "Text read from file: $line"
@@ -45,16 +25,17 @@ prepare_repositories() {
         git_repo_name=$(echo $line | grep -o "^.*:" | cut -d':' -f1)
         echo "Repo Name: $git_repo_name"
         echo "Repo Url: $git_repo_url"
-        # rm -rf "${REPOSITORY_PATH}/${git_repo_name}"
-
 
         if [ ! -d "${REPOSITORY_PATH}/${git_repo_name}" ]; then
             echo 'Cloning repo ${git_repo_name}'
-            git clone ${git_repo_url}
+            git clone ${git_repo_url} | tee -a "${LOGFILE}"
+            log "CLoning completed for ${git_repo_name}"
         fi
+        log "Entering repo ${git_repo_name}"
         cd ${git_repo_name} || exit 0
         echo "Pulling Repo : ${git_repo_name}"
-        git pull origin master
+        git pull origin master | tee -a "${LOGFILE}"
+        log "Pull operation completed for ${git_repo_name}"
         cd ..
    done
 
@@ -77,22 +58,17 @@ export PACKAGE="ekl-opengrok"
   export OPENGROK_PATH="/var/lib/${PACKAGE}"
   export REPOSITORY_PATH="${OPENGROK_PATH}/repositories/src_root"
   export USERNAME="fk-supply-chain"
-
-#while true; do
-#    echo "In index_repositories file main function"
-#    # Look for a file
-#    if [ -f ${SERVICE_STOP_FILE} ]; then
-#        log "Stooping process"
-#        rm -f ${SERVICE_STOP_FILE}
-#        return
-#    fi
-#    log "Preparing repositories"
-#    prepare_repositories
-#    log "Indexing the repos"
-#    index_repositories
-#    sleep 300
-#done
 echo "$(date) ${SUDO_USER:-$USER}  $(whoami)" >> ${REPOSITORY_PATH}/grok_user.txt
+while true; do
+    echo "In index_repositories file main function"
+
+    log "Preparing repositories"
+    prepare_repositories
+    log "Indexing the repos"
+    index_repositories
+    sleep 300
+done
+
 
 }
 
