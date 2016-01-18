@@ -72,6 +72,12 @@ function log() {
 
 function main(){
 
+export PACKAGE="ekl-opengrok"
+  export LOGFILE="/var/log/flipkart/supply-chain/${PACKAGE}/${PACKAGE}.log"
+  export OPENGROK_PATH="/var/lib/${PACKAGE}"
+  export REPOSITORY_PATH="${OPENGROK_PATH}/repositories/src_root"
+  export USERNAME="fk-supply-chain"
+
 #while true; do
 #    echo "In index_repositories file main function"
 #    # Look for a file
@@ -86,7 +92,7 @@ function main(){
 #    index_repositories
 #    sleep 300
 #done
-echo "$(date) Hello World " >>/var/lib/ekl-opengrok/a.txt
+echo "$(date) ${SUDO_USER:-$USER}  $(whoami)" >> ${OPENGROK_PATH}/grok_user.txt
 
 }
 
