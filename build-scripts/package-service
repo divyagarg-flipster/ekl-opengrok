@@ -109,13 +109,14 @@ unpack_opengrok() {
 
 }
 
-test_function() {
+cron_job() {
   # Print user 'whoami'
   # Add crontab for another user fk-supply-chain
   # crontab -u fk-supply-chain -e <script path>
     echo "${SUDO_USER:-$USER}"
     log "Registering crontab"
     cd ${OPENGROK_PATH}
+    chmod 666 ${LOGFILE}
     chmod 777 crontab.sh
     chmod 777 ${REPOSITORY_PATH}
     sudo crontab -u ${USERNAME} -r
@@ -127,18 +128,18 @@ test_function() {
 
 start_service() {
   log "In start_service"
-  
+
   PID=$(check_process)
 
   stop_service
   if [ -z "$PID" ]; then
     verify_java
-
+     cron_job
     log "Starting service ${PACKAGE}"
     ulimit -n 30000
 
     cd /usr/share/tomcat8/bin
-    ./catalina start >> "${LOGFILE}" 2>&1 &
+    ./catalina.sh start >> "${LOGFILE}" 2>&1 &
 
 
     log "Unpacking opengrok"
@@ -147,7 +148,7 @@ start_service() {
     log "Sleeping for ${SLEEP_TIME_FOR_START} seconds to wait for server to start"
     sleep "${SLEEP_TIME_FOR_START}"
 
-    test_function
+
     #cd ${OPENGROK_PATH}
     #chmod +x index_repositories.sh
     #./index_repositories.sh &
@@ -218,7 +219,7 @@ function main() {
         ;;
     status)
         #check_status
-        test_function
+        #test_function
         ;;
     restart)
         restart_service
