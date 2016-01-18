@@ -117,7 +117,7 @@ test_function() {
     log "Registering crontab"
     cd ${OPENGROK_PATH}
     #crontab -u ${USERNAME} -e
-    echo "10 * * * * ${OPENGROK_PATH}/crontab.sh" | tee -a /var/spool/cron/${USERNAME}
+    echo "2 * * * * ${OPENGROK_PATH}/crontab.sh" | tee -a /var/spool/cron/${USERNAME}
     cd -
 
 }

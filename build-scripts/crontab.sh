@@ -72,20 +72,22 @@ function log() {
 
 function main(){
 
-while true; do
-    echo "In index_repositories file main function"
-    # Look for a file
-    if [ -f ${SERVICE_STOP_FILE} ]; then
-        log "Stooping process"
-        rm -f ${SERVICE_STOP_FILE}
-        return
-    fi
-    log "Preparing repositories"
-    prepare_repositories
-    log "Indexing the repos"
-    index_repositories
-    sleep 300
-done
+#while true; do
+#    echo "In index_repositories file main function"
+#    # Look for a file
+#    if [ -f ${SERVICE_STOP_FILE} ]; then
+#        log "Stooping process"
+#        rm -f ${SERVICE_STOP_FILE}
+#        return
+#    fi
+#    log "Preparing repositories"
+#    prepare_repositories
+#    log "Indexing the repos"
+#    index_repositories
+#    sleep 300
+#done
+echo "$(date) Hello World " >>/home/fk-supply-chain/a.txt
+
 }
 
 main
