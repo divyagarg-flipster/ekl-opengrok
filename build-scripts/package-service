@@ -108,8 +108,14 @@ unpack_opengrok() {
 
 }
 
+test_function() {
+  # Print user 'whoami'
+  # Add crontab for another user fk-supply-chain
+  # crontab -u fk-supply-chain -e <script path>
+  echo "User is: "
+  echo whoami
 
-
+}
 
 start_service() {
   log "In start_service"
@@ -202,7 +208,8 @@ function main() {
         make_bir
         ;;
     status)
-        check_status
+        #check_status
+        test_function
         ;;
     restart)
         restart_service
