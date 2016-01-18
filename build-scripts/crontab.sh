@@ -86,7 +86,7 @@ function main(){
 #    index_repositories
 #    sleep 300
 #done
-echo "$(date) Hello World " >>${OPENGROK_PATH}/a.txt
+echo "$(date) Hello World " >>/var/lib/ekl-opengrok/a.txt
 
 }
 
