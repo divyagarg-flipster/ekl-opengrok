@@ -114,7 +114,7 @@ cron_job() {
 start_service() {
   log "In start_service"
   PID=$(check_process)
-    stop_service
+    #stop_service
   if [ -z "$PID" ]; then
     log "Starting service ${PACKAGE}"
     verify_java
