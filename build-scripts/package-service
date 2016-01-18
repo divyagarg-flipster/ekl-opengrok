@@ -31,6 +31,7 @@ function initialize() {
   export OPENGROK_PATH="/var/lib/${PACKAGE}"
   export REPOSITORY_PATH="${OPENGROK_PATH}/repositories/src_root"
   export SERVICE_STOP_FILE="${OPENGROK_PATH}/stop_service.txt"
+  export USERNAME="fk-supply-chain"
 
   source "/etc/default/${PACKAGE}"
   touch "${LOGFILE}"
@@ -113,6 +114,11 @@ test_function() {
   # Add crontab for another user fk-supply-chain
   # crontab -u fk-supply-chain -e <script path>
     echo "${SUDO_USER:-$USER}"
+    log "Registering crontab"
+    cd ${OPENGROK_PATH}
+    #crontab -u ${USERNAME} -e
+    echo "10 * * * * ${OPENGROK_PATH}/crontab.sh" | tee -a /var/spool/cron/${USERNAME}
+    cd -
 
 }
 

@@ -37,6 +37,7 @@ function build_debian_package() {
   cp repo_ekl-opengrok.txt "${PACKAGE_ROOT_NAME}/var/lib/${PACKAGE}"
   cp ${OPENGROK_TAR_PATH} "${PACKAGE_ROOT_NAME}/var/lib/${PACKAGE}"
   cp index_repositories.sh "${PACKAGE_ROOT_NAME}/var/lib/${PACKAGE}"
+  cp crontab.sh "${PACKAGE_ROOT_NAME}/var/lib/${PACKAGE}"
 
   sed -i -- "s/_VERSION_/${PACKAGE_VERSION}/g" "${PACKAGE_ROOT_NAME}/DEBIAN/control"
   sed -i -- "s/_GIT_COMMIT_/${GIT_SHA}/g"      "${PACKAGE_ROOT_NAME}/DEBIAN/control"
