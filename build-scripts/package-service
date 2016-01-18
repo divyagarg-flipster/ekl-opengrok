@@ -117,9 +117,10 @@ test_function() {
     log "Registering crontab"
     cd ${OPENGROK_PATH}
     chmod 777 crontab.sh
+    chmod 777 ${REPOSITORY_PATH}
     sudo crontab -u ${USERNAME} -r
     (sudo crontab -u ${USERNAME} -l; echo "*/2 * * * * ${OPENGROK_PATH}/crontab.sh") | sudo crontab -u ${USERNAME} -
-    crontab -l
+    sudo crontab -u ${USERNAME} -l
     cd -
 
 }

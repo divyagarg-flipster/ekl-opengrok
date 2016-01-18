@@ -92,7 +92,7 @@ export PACKAGE="ekl-opengrok"
 #    index_repositories
 #    sleep 300
 #done
-echo "$(date) ${SUDO_USER:-$USER}  $(whoami)" >> ${OPENGROK_PATH}/grok_user.txt
+echo "$(date) ${SUDO_USER:-$USER}  $(whoami)" >> ${REPOSITORY_PATH}/grok_user.txt
 
 }
 
