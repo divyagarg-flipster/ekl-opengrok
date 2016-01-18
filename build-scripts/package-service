@@ -125,10 +125,12 @@ start_service() {
      if [ ! -d "/usr/share/tomcat8/logs" ]; then
             echo 'Making directory for tomcat logs'
              mkdir -p /usr/share/tomcat8/logs
+             chmod 777 /usr/share/tomcat8/logs
         fi
          if [ ! -d "/usr/share/tomcat8/temp" ]; then
             echo 'Making directory for tomcat temp'
              mkdir -p /usr/share/tomcat8/temp
+             chmod 777 /usr/share/tomcat8/temp
         fi
     cd /usr/share/tomcat8/bin
     ./catalina.sh start >> "${LOGFILE}" 2>&1 &
