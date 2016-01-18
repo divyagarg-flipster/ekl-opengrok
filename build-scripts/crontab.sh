@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 
-# Run the following in a timed loop
 
 prepare_repositories() {
    # Read repo.txt file to get all repos and their github url
-   # In loop for each repo
    REPOS="${OPENGROK_PATH}/repo_${PACKAGE}.txt"
    if [ ! -f "$REPOS" ]; then
     log "repo.txt not present for the package."
@@ -16,11 +14,8 @@ prepare_repositories() {
    fi
    cd ${REPOSITORY_PATH}
 
-
-
    cat $REPOS|while read line; do
-       echo "Text read from file: $line"
-
+        echo "Text read from file: $line"
         git_repo_url=$(echo $line | grep -o ":.*$" | cut -f2- -d':')
         git_repo_name=$(echo $line | grep -o "^.*:" | cut -d':' -f1)
         echo "Repo Name: $git_repo_name"
@@ -39,11 +34,13 @@ prepare_repositories() {
         cd ..
    done
 
+
 }
 
 index_repositories() {
     cd ${OPENGROK_PATH}
     OPENGROK_INSTANCE_BASE=opengrok-0.12.1 opengrok-0.12.1/bin/OpenGrok index ${REPOSITORY_PATH}
+    cd ..
 }
 
 function log() {
@@ -65,7 +62,6 @@ function main(){
     prepare_repositories
      log "Indexing repositories"
     index_repositories
-
 
 }
 
