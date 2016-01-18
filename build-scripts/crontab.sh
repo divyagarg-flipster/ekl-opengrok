@@ -29,7 +29,7 @@ prepare_repositories() {
         if [ ! -d "${REPOSITORY_PATH}/${git_repo_name}" ]; then
             echo 'Cloning repo ${git_repo_name}'
             git clone ${git_repo_url} | tee -a "${LOGFILE}"
-            log "CLoning completed for ${git_repo_name}"
+            log "Cloning completed for ${git_repo_name}"
         fi
         log "Entering repo ${git_repo_name}"
         cd ${git_repo_name} || exit 0
@@ -42,7 +42,6 @@ prepare_repositories() {
 }
 
 index_repositories() {
-    log "Indexing repositories"
     cd ${OPENGROK_PATH}
     OPENGROK_INSTANCE_BASE=opengrok-0.12.1 opengrok-0.12.1/bin/OpenGrok index ${REPOSITORY_PATH}
 }
@@ -53,21 +52,19 @@ function log() {
 
 function main(){
 
-export PACKAGE="ekl-opengrok"
-  export LOGFILE="/var/log/flipkart/supply-chain/${PACKAGE}/${PACKAGE}.log"
-  export OPENGROK_PATH="/var/lib/${PACKAGE}"
-  export REPOSITORY_PATH="${OPENGROK_PATH}/repositories/src_root"
-  export USERNAME="fk-supply-chain"
-echo "$(date) ${SUDO_USER:-$USER}  $(whoami)" >> ${REPOSITORY_PATH}/grok_user.txt
-while true; do
+    export PACKAGE="ekl-opengrok"
+    export LOGFILE="/var/log/flipkart/supply-chain/${PACKAGE}/${PACKAGE}.log"
+    export OPENGROK_PATH="/var/lib/${PACKAGE}"
+    export REPOSITORY_PATH="${OPENGROK_PATH}/repositories/src_root"
+    export USERNAME="fk-supply-chain"
+    echo "$(date) ${SUDO_USER:-$USER}  $(whoami)" >> ${REPOSITORY_PATH}/grok_user.txt
+
     echo "In index_repositories file main function"
 
     log "Preparing repositories"
     prepare_repositories
-    log "Indexing the repos"
+     log "Indexing repositories"
     index_repositories
-    sleep 300
-done
 
 
 }
