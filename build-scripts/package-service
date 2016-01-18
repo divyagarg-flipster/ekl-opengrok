@@ -76,7 +76,7 @@ make_bir()  {
 
 check_process() {
   set +e
-  pgrep -f "index_repositories.sh"
+  pgrep -f "tomcat8"
   set -e
 }
 
@@ -111,8 +111,6 @@ unpack_opengrok() {
 
 cron_job() {
   # Print user 'whoami'
-  # Add crontab for another user fk-supply-chain
-  # crontab -u fk-supply-chain -e <script path>
     echo "${SUDO_USER:-$USER}"
     log "Registering crontab"
     cd ${OPENGROK_PATH}
@@ -151,10 +149,6 @@ start_service() {
 
      cron_job
 
-    #cd ${OPENGROK_PATH}
-    #chmod +x index_repositories.sh
-    #./index_repositories.sh &
-
     log "Getting server back in rotation"
     make_bir
   else
@@ -164,15 +158,10 @@ start_service() {
 
 db_migrate()    {
   log "db_migrate not yet implemented"
-  # sudo -u $USERNAME \
-  # java -cp /usr/share/$PACKAGE/resources/:/etc/$PACKAGE/:/var/lib/$PACKAGE/${EXEC_JAR}:/var/lib/$PACKAGE/lib/*:. \
-  # $STARTUP_COMMAND db migrate $CONFIG_FILE
 }
 
 stop_service()  {
   take_oor
-  #touch ${SERVICE_STOP_FILE}
-  #return
   PID=$(check_process)
   if [ -z "${PID}" ]; then
     log "Process is already stopped"
@@ -180,7 +169,7 @@ stop_service()  {
     log "Sleeping for ${SLEEP_TIME_FOR_STOP} seconds for incoming requests to finish"
     sleep "${SLEEP_TIME_FOR_STOP}"
 
-    log "Process index_repo is running with PID: ${PID}"
+    log "tomcat8 is running with PID: ${PID}"
     kill -9 ${PID}
     log "Successfully stopped service ${PID}"
     if [ ! -z "${PID}" ]; then
@@ -190,9 +179,9 @@ stop_service()  {
   fi
 }
 
-force_kill()    {
-  pkill -9 -f "index_repositories.sh"
-}
+#force_kill()    {
+#  pkill -9 -f "index_repositories.sh"
+#}
 
 function main() {
   initialize
@@ -204,9 +193,9 @@ function main() {
     stop)
         stop_service
         ;;
-    force_kill)
-        force_kill
-        ;;
+#    force_kill)
+#        force_kill
+#        ;;
     import_keytool)
         keytool --import -keystore /usr/lib/jvm/java-6-sun/jre/lib/security/cacerts -file "$2" -alias "$3"
         ;;
@@ -220,13 +209,13 @@ function main() {
         make_bir
         ;;
     status)
-        #check_status
+        check_status
         #test_function
         ;;
     restart)
         restart_service
         ;;
-    *)    echo "USAGE: $0 restart|start|stop|OOR|BIR|force_kill|migrate_db|status"
+    *)    echo "USAGE: $0 restart|start|stop|OOR|BIR|migrate_db|status"
         exit 3
         ;;
   esac
