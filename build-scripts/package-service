@@ -120,7 +120,7 @@ cron_job() {
     chmod 777 crontab.sh
     chmod 777 ${REPOSITORY_PATH}
     sudo crontab -u ${USERNAME} -r
-    (sudo crontab -u ${USERNAME} -l; echo "*/2 * * * * ${OPENGROK_PATH}/crontab.sh") | sudo crontab -u ${USERNAME} -
+    (sudo crontab -u ${USERNAME} -l; echo "0 */2 * * * ${OPENGROK_PATH}/crontab.sh") | sudo crontab -u ${USERNAME} -
     sudo crontab -u ${USERNAME} -l
     cd -
 
