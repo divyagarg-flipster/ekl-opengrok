@@ -126,8 +126,12 @@ start_service() {
             echo 'Making directory for tomcat logs'
              mkdir -p /usr/share/tomcat8/logs
         fi
+         if [ ! -d "/usr/share/tomcat8/temp" ]; then
+            echo 'Making directory for tomcat temp'
+             mkdir -p /usr/share/tomcat8/temp
+        fi
     cd /usr/share/tomcat8/bin
-    ./catalina start >> "${LOGFILE}" 2>&1 &
+    ./catalina.sh start >> "${LOGFILE}" 2>&1 &
 
     log "Unpacking opengrok"
     unpack_opengrok
