@@ -33,8 +33,6 @@ prepare_repositories() {
         log "Pull operation completed for ${git_repo_name}"
         cd ..
    done
-
-
 }
 
 index_repositories() {
