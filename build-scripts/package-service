@@ -112,8 +112,10 @@ test_function() {
   # Print user 'whoami'
   # Add crontab for another user fk-supply-chain
   # crontab -u fk-supply-chain -e <script path>
-  echo "User is: "
-  echo whoami
+
+  user = $(whoami)
+  echo "User is: ${user}"
+
 
 }
 
