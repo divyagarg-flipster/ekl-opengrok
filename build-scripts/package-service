@@ -112,10 +112,7 @@ test_function() {
   # Print user 'whoami'
   # Add crontab for another user fk-supply-chain
   # crontab -u fk-supply-chain -e <script path>
-
-  user = $(whoami)
-  echo "User is: ${user}"
-
+    echo "${SUDO_USER:-$USER}"
 
 }
 
