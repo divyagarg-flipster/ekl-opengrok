@@ -137,7 +137,7 @@ start_service() {
      cron_job
     log "Starting service ${PACKAGE}"
     ulimit -n 30000
-
+    mkdir -p /usr/share/tomcat8/logs
     cd /usr/share/tomcat8/bin
     ./catalina.sh start >> "${LOGFILE}" 2>&1 &
 
