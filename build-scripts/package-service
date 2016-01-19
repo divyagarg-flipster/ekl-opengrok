@@ -51,7 +51,7 @@ function verify_java() {
 take_oor() {
     log "Taking ${PACKAGE} Out-Of-Rotation..."
     cd /usr/share/tomcat8/bin
-    catalina stop >> "${LOGFILE}" 2>&1 &
+    ./catalina.sh stop >> "${LOGFILE}" 2>&1 &
     log "OOR operation success"
 
 }
@@ -129,7 +129,7 @@ start_service() {
     verify_java
     cron_job
 
-    limit -n 30000
+    ulimit -n 30000
 
      if [ ! -d "/usr/share/tomcat8/logs" ]; then
             echo 'Making directory for tomcat logs'
