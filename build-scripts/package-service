@@ -97,14 +97,14 @@ unpack_opengrok() {
 }
 
 cron_job() {
-  # Print user 'whoami'
+
     echo "${SUDO_USER:-$USER}"
     log "Registering crontab"
     cd ${OPENGROK_PATH}
     chmod 666 ${LOGFILE}
     chmod 777 crontab.sh
     chmod 777 ${REPOSITORY_PATH}
-    export PATH="/sbin:$PATH
+    export PATH="/sbin:$PATH"
     echo "Stopping cron job"
     /etc/init.d/cron stop
     echo "Removing existing entries from crontab"
@@ -129,7 +129,7 @@ start_service() {
     verify_java
     cron_job
 
-    ulimit -n 30000
+    limit -n 30000
 
      if [ ! -d "/usr/share/tomcat8/logs" ]; then
             echo 'Making directory for tomcat logs'
@@ -194,9 +194,6 @@ function main() {
     stop)
         stop_service
         ;;
-#    force_kill)
-#        force_kill
-#        ;;
     import_keytool)
         keytool --import -keystore /usr/lib/jvm/java-6-sun/jre/lib/security/cacerts -file "$2" -alias "$3"
         ;;
@@ -215,12 +212,11 @@ function main() {
     restart)
         restart_service
         ;;
-    *)    echo "USAGE: $0 restart|start|stop|OOR|BIR|migrate_db|status"
+    *)
+        echo "USAGE: $0 restart|start|stop|OOR|BIR|migrate_db|status"
         exit 3
         ;;
   esac
 }
 
 main "$@"
-
-
