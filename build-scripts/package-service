@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+#set -x
 ### BEGIN INIT INFO
 # Provides:          ekl-opengrok
 # Required-Start:    $local_fs $remote_fs $network $syslog $named
@@ -111,8 +111,8 @@ cron_job() {
     echo "Removing existing entries from crontab"
     sudo crontab -u ${USERNAME} -r
     echo "Adding crontab"
-#    (sudo crontab -u ${USERNAME} -l; echo "0 */2 * * * ${OPENGROK_PATH}/crontab.sh") | sudo crontab -u ${USERNAME} -
-    (sudo crontab -u ${USERNAME} -l; echo "*/10 * * * * ${OPENGROK_PATH}/crontab.sh") | sudo crontab -u ${USERNAME} -
+    (sudo crontab -u ${USERNAME} -l; echo "0 */2 * * * ${OPENGROK_PATH}/crontab.sh") | sudo crontab -u ${USERNAME} -
+#    (sudo crontab -u ${USERNAME} -l; echo "*/10 * * * * ${OPENGROK_PATH}/crontab.sh") | sudo crontab -u ${USERNAME} -
     echo "Listing crontab"
     sudo crontab -u ${USERNAME} -l
     echo "Starting cron job"

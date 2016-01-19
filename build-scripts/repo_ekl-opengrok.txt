@@ -11,4 +11,5 @@ ekl-elixir:git@github.com:Flipkart/ekl-elixir.git
 ekart-apps-automation:git@github.com:Flipkart/ekart-apps-automation.git
 fkl-shipping:git@github.com:Flipkart/fkl-shipping.git
 fkl-crons:git@github.com:Flipkart/fkl-crons.git
+ekart-web:git@github.com:Flipkart/ekart-web.git
 
