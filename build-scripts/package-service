@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -x
 ### BEGIN INIT INFO
 # Provides:          ekl-opengrok
 # Required-Start:    $local_fs $remote_fs $network $syslog $named
