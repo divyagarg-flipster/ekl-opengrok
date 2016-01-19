@@ -116,7 +116,7 @@ cron_job() {
     echo "Stopping cron job"
     /etc/init.d/cron stop
     CRON_ID =$(check_cronjob_status)
-    if [! -z "${PID}" ]; then
+    if [! -z "${CRON_ID}" ]; then
         log "cronjob is running with PID ${CRON_ID}."
         pkill -f -9 "cron"
     fi
