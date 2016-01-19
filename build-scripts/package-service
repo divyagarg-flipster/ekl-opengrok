@@ -110,7 +110,8 @@ cron_job() {
     echo "Removing existing entries from crontab"
     sudo crontab -u ${USERNAME} -r
     echo "Adding crontab"
-    (sudo crontab -u ${USERNAME} -l; echo "0 */2 * * * ${OPENGROK_PATH}/crontab.sh") | sudo crontab -u ${USERNAME} -
+#    (sudo crontab -u ${USERNAME} -l; echo "0 */2 * * * ${OPENGROK_PATH}/crontab.sh") | sudo crontab -u ${USERNAME} -
+    (sudo crontab -u ${USERNAME} -l; echo "*/10 * * * * ${OPENGROK_PATH}/crontab.sh") | sudo crontab -u ${USERNAME} -
     echo "Listing crontab"
     sudo crontab -u ${USERNAME} -l
     echo "Starting cron job"
@@ -138,10 +139,7 @@ start_service() {
 
         chmod 777 /usr/share/tomcat8/logs
 
-#    cd /usr/share/tomcat8/bin
-#    ./catalina.sh start >> "${LOGFILE}" 2>&1 &
-
-    sudo /etc/init.d/tomcat8  start
+        sudo /etc/init.d/tomcat8  start
 
     log "Unpacking opengrok"
     unpack_opengrok
@@ -184,10 +182,6 @@ stop_service()  {
   fi
 }
 
-#force_kill()    {
-#    PID=$(check_process)
-#
-#}
 
 function main() {
   initialize
