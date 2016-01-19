@@ -99,7 +99,7 @@ unpack_opengrok() {
 
 check_cronjob_status() {
 set +e
-pgrep -f cron
+pgrep -f "cron"
 set -e
 
 }
@@ -115,8 +115,8 @@ cron_job() {
     export PATH="/sbin:$PATH"
     echo "Stopping cron job"
     /etc/init.d/cron stop
-    CRON_ID =$(check_cronjob_status)
-    if [! -z "${CRON_ID}" ]; then
+    CRON_ID=$(check_cronjob_status)
+    if [ ! -z "${CRON_ID}" ]; then
         log "cronjob is running with PID ${CRON_ID}."
         pkill -f -9 "cron"
     fi
