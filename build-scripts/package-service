@@ -96,6 +96,13 @@ unpack_opengrok() {
 
 }
 
+
+check_cronjob_status() {
+set +e
+pgrep -f cron
+set -e
+
+}
 cron_job() {
 
     echo "${SUDO_USER:-$USER}"
@@ -108,6 +115,11 @@ cron_job() {
     export PATH="/sbin:$PATH"
     echo "Stopping cron job"
     /etc/init.d/cron stop
+    PID =$(check_cronjob_status)
+    if [! -z "${PID}" ]; then
+        log "cronjob is running with PID ${PID}."
+        pkill -f -9 "cron"
+    fi
     echo "Removing existing entries from crontab"
     sudo crontab -u ${USERNAME} -r
     echo "Adding crontab"
