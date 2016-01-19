@@ -104,9 +104,18 @@ cron_job() {
     chmod 666 ${LOGFILE}
     chmod 777 crontab.sh
     chmod 777 ${REPOSITORY_PATH}
+    export PATH="/sbin:$PATH
+    echo "Stopping cron job"
+    /etc/init.d/cron stop
+    echo "Removing existing entries from crontab"
     sudo crontab -u ${USERNAME} -r
+    echo "Adding crontab"
     (sudo crontab -u ${USERNAME} -l; echo "0 */2 * * * ${OPENGROK_PATH}/crontab.sh") | sudo crontab -u ${USERNAME} -
+    echo "Listing crontab"
     sudo crontab -u ${USERNAME} -l
+    echo "Starting cron job"
+    /etc/init.d/cron start
+    echo "Started Cron Job"
     cd -
 
 }
@@ -126,12 +135,9 @@ start_service() {
             echo 'Making directory for tomcat logs'
              mkdir -p /usr/share/tomcat8/logs
         fi
-         if [ ! -d "/usr/share/tomcat8/temp" ]; then
-            echo 'Making directory for tomcat temp'
-             mkdir -p /usr/share/tomcat8/temp
-        fi
+
         chmod 777 /usr/share/tomcat8/logs
-        chmod 777 /usr/share/tomcat8/temp
+
     cd /usr/share/tomcat8/bin
     ./catalina.sh start >> "${LOGFILE}" 2>&1 &
 
@@ -161,7 +167,9 @@ stop_service()  {
     sleep "${SLEEP_TIME_FOR_STOP}"
 
     log "tomcat8 is running with PID: ${PID}"
-    kill -9 ${PID}
+    cd /usr/share/tomcat8/bin
+    ./catalina.sh stop >> "${LOGFILE}" 2>&1 &
+    #kill -9 ${PID}
     log "Successfully stopped service ${PID}"
     if [ ! -z "${PID}" ]; then
       log "Process still running at pid ${PID}. Force killing process"
