@@ -33,12 +33,13 @@ prepare_repositories() {
         log "Pull operation completed for ${git_repo_name}"
         cd ..
    done
+   cd -
 }
 
 index_repositories() {
     cd ${OPENGROK_PATH}
     OPENGROK_INSTANCE_BASE=opengrok-0.12.1 opengrok-0.12.1/bin/OpenGrok index ${REPOSITORY_PATH}
-    cd ..
+    cd -
 }
 
 function log() {
