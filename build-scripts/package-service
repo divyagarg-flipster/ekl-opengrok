@@ -104,6 +104,7 @@ cron_job() {
     chmod 666 ${LOGFILE}
     chmod 777 crontab.sh
     chmod 777 ${REPOSITORY_PATH}
+    chmod -R 777 /var/lib/ekl-opengrok/opengrok-0.12.1
     export PATH="/sbin:$PATH"
     echo "Stopping cron job"
     /etc/init.d/cron stop
