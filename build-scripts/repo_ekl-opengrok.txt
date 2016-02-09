@@ -12,4 +12,5 @@ ekart-apps-automation:git@github.com:Flipkart/ekart-apps-automation.git
 fkl-shipping:git@github.com:Flipkart/fkl-shipping.git
 fkl-crons:git@github.com:Flipkart/fkl-crons.git
 ekart-web:git@github.com:Flipkart/ekart-web.git
+ekl-locker:git@github.com:Flipkart/ekl-locker.git
 
